@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 // import Container from "@material-ui/core/Container";
 
 import ISong from "./shared/interfaces/ISong";
+import { compareSongs } from "./shared/helpers/helpers";
 
 import SelectedPieces from "./SelectedPieces";
 import bookOne from "./constants/bookOne";
@@ -36,20 +37,6 @@ function App() {
   const [selectedPieces, setSelectedPieces] = React.useState([] as any);
   const [currentBookOne, setCurrentBookOne] = React.useState(bookOne);
   const [reset, setReset] = React.useState(true);
-
-  // Todo extract this out to helper file
-  const compare = (a: ISong, b: ISong) => {
-    if (a === null || b === null) {
-      return 0;
-    }
-    if (a.bookOrder < b.bookOrder) {
-      return -1;
-    }
-    if (a.bookOrder > b.bookOrder) {
-      return 1;
-    }
-    return 0;
-  };
 
   const generateRandomPieces = () => {
     let tempBookOne = currentBookOne;
@@ -83,7 +70,7 @@ function App() {
     let selectedPieces2 = [firstPiece, secondPiece, thirdPiece].filter(
       piece => piece !== nullSong
     );
-    selectedPieces2 = selectedPieces2.sort(compare);
+    selectedPieces2 = selectedPieces2.sort(compareSongs);
 
     setSelectedPieces(selectedPieces2);
     setReset(false);

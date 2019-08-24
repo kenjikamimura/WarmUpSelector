@@ -8,7 +8,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 import ISong from "./shared/interfaces/ISong";
-
 import lang from "./constants/en";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,11 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-
-interface ISong {
-  bookOrder: number;
-  name: string;
-}
 
 // Todo: Extract this to another file and import it
 interface IProps {
