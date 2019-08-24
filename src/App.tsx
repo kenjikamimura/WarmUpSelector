@@ -9,6 +9,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 // import Container from "@material-ui/core/Container";
 
+import ISong from "./shared/interfaces/ISong";
+
 import SelectedPieces from "./SelectedPieces";
 import bookOne from "./constants/bookOne";
 
@@ -27,11 +29,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: 14
   }
 }));
-
-interface ISong {
-  bookOrder: number;
-  name: string;
-}
 
 function App() {
   const classes = useStyles();
