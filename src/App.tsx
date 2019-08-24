@@ -12,16 +12,15 @@ import Typography from "@material-ui/core/Typography";
 import SelectedPieces from "./SelectedPieces";
 
 import lang from "./constants/en";
-import { Box } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    minWidth: 275
+    minWidth: 275,
+    minHeight: 1000
   },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)"
+  button: {
+    margin: theme.spacing(1)
   },
   title: {
     fontSize: 14
@@ -30,27 +29,56 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
+
+  const [selectedPieces, setSelectedPieces] = React.useState([] as any);
+  // const [currentBookOne, setCurrentBookOne] = useState(bookOne);
+  const [reset, setReset] = React.useState(true);
+
+  const generateRandomPieces = () => {
+    setReset(false);
+    setSelectedPieces(["buttonCLicked"]);
+  };
+
+  const resetSongPool = () => {
+    setSelectedPieces([]);
+    // setCurrentBookOne(bookOne);
+    setReset(true);
+  };
+
   return (
-    // <Container maxWidth="sm">
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h4" component="h2" align="center">
-          {lang.appName}
+          {lang.APP_NAME}
         </Typography>
-        <SelectedPieces />
+        <SelectedPieces selectedPieces={selectedPieces} reset={reset} />
       </CardContent>
       <CardActions>
-        <Box>
-          <Button size="small" variant="outlined" color="primary">
-            {lang.randomize}
-          </Button>
-          <Button size="small" variant="outlined">
-            {lang.reset}
-          </Button>
-        </Box>
+        <Grid container={true} direction="column" alignItems="center">
+          <Grid item={true}>
+            <Button
+              size="small"
+              variant="outlined"
+              color="primary"
+              className={classes.button}
+              onClick={generateRandomPieces}
+            >
+              {lang.RANDOMIZE}
+            </Button>
+          </Grid>
+          <Grid item={true}>
+            <Button
+              size="small"
+              variant="outlined"
+              className={classes.button}
+              onClick={resetSongPool}
+            >
+              {lang.RESET_BUTTON}
+            </Button>
+          </Grid>
+        </Grid>
       </CardActions>
     </Card>
-    // </Container>
   );
 }
 

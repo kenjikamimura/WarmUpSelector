@@ -1,7 +1,8 @@
 const lang = {
-  appName: "Warm Up Selector",
-  randomize: "Randomize!",
-  reset: "Reset"
+  APP_NAME: "Warm Up Selector",
+  RANDOMIZE: "Randomize!",
+  RESET_BUTTON: "Reset",
+  CLICK_RESET: "Click Reset!"
 };
 
 export default lang;
