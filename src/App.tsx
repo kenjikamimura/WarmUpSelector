@@ -85,7 +85,7 @@ function App() {
   return (
     <Card className={classes.card}>
       <CardContent>
-        <Typography variant="h4" component="h2" align="center">
+        <Typography variant="h3" component="h2" align="center" color="primary">
           {lang.APP_NAME}
         </Typography>
         <SelectedPieces selectedPieces={selectedPieces} reset={reset} />
@@ -94,7 +94,6 @@ function App() {
         <Grid container={true} direction="column" alignItems="center">
           <Grid item={true}>
             <Button
-              size="small"
               variant="outlined"
               color="primary"
               className={classes.button}
@@ -105,7 +104,6 @@ function App() {
           </Grid>
           <Grid item={true}>
             <Button
-              size="small"
               variant="outlined"
               className={classes.button}
               onClick={resetSongPool}
