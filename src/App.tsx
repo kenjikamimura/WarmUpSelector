@@ -67,12 +67,11 @@ function App() {
       song => thirdPiece.bookOrder !== song.bookOrder
     );
 
-    let selectedPieces2 = [firstPiece, secondPiece, thirdPiece].filter(
-      piece => piece !== nullSong
-    );
-    selectedPieces2 = selectedPieces2.sort(compareSongs);
+    const newSelectedPieces = [firstPiece, secondPiece, thirdPiece]
+      .filter(piece => piece !== nullSong)
+      .sort(compareSongs);
 
-    setSelectedPieces(selectedPieces2);
+    setSelectedPieces(newSelectedPieces);
     setReset(false);
     setCurrentBookOne(tempBookOne);
   };
