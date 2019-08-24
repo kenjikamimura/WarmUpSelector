@@ -22,18 +22,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function createData(name: string) {
-  return { name };
+interface ISong {
+  bookOrder: number;
+  name: string;
 }
 
-const rows = [
-  createData("Frozen yoghurt"),
-  createData("Ice cream sandwich"),
-  createData("Eclair")
-];
-
+// Todo: Extract this to another file and import it
 interface IProps {
-  selectedPieces: string[];
+  selectedPieces: ISong[];
   reset: boolean;
 }
 
@@ -46,6 +42,10 @@ export default function SelectedPieces({ selectedPieces, reset }: IProps) {
         <TableHead>
           {reset ? (
             <TableRow>
+              <TableCell align="center">{lang.CLICK_RANDOMIZE}</TableCell>
+            </TableRow>
+          ) : selectedPieces.length === 0 ? (
+            <TableRow>
               <TableCell align="center">{lang.CLICK_RESET}</TableCell>
             </TableRow>
           ) : null}
@@ -53,10 +53,10 @@ export default function SelectedPieces({ selectedPieces, reset }: IProps) {
         <TableBody>
           {reset
             ? null
-            : rows.map(row => (
-                <TableRow key={row.name}>
+            : selectedPieces.map(piece => (
+                <TableRow key={piece.name}>
                   <TableCell component="th" scope="row" align="center">
-                    {row.name}
+                    {piece.name}
                   </TableCell>
                 </TableRow>
               ))}

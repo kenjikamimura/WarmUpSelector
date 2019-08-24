@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 // import Container from "@material-ui/core/Container";
 
 import SelectedPieces from "./SelectedPieces";
+import bookOne from "./constants/bookOne";
 
 import lang from "./constants/en";
 import { Grid } from "@material-ui/core";
@@ -27,21 +28,74 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+interface ISong {
+  bookOrder: number;
+  name: string;
+}
+
 function App() {
   const classes = useStyles();
 
   const [selectedPieces, setSelectedPieces] = React.useState([] as any);
-  // const [currentBookOne, setCurrentBookOne] = useState(bookOne);
+  const [currentBookOne, setCurrentBookOne] = React.useState(bookOne);
   const [reset, setReset] = React.useState(true);
 
+  // Todo extract this out to helper file
+  const compare = (a: ISong, b: ISong) => {
+    if (a === null || b === null) {
+      return 0;
+    }
+    if (a.bookOrder < b.bookOrder) {
+      return -1;
+    }
+    if (a.bookOrder > b.bookOrder) {
+      return 1;
+    }
+    return 0;
+  };
+
   const generateRandomPieces = () => {
+    let tempBookOne = currentBookOne;
+
+    const nullSong: ISong = {
+      bookOrder: 0,
+      name: ""
+    };
+    // Todo refactor this to be cleaner, extract out to helper file
+    const firstPiece = tempBookOne.length
+      ? tempBookOne[Math.floor(Math.random() * tempBookOne.length)]
+      : nullSong;
+    tempBookOne = tempBookOne.filter(
+      song => firstPiece.bookOrder !== song.bookOrder
+    );
+
+    const secondPiece = tempBookOne.length
+      ? tempBookOne[Math.floor(Math.random() * tempBookOne.length)]
+      : nullSong;
+    tempBookOne = tempBookOne.filter(
+      song => secondPiece.bookOrder !== song.bookOrder
+    );
+    const thirdPiece = tempBookOne.length
+      ? tempBookOne[Math.floor(Math.random() * tempBookOne.length)]
+      : nullSong;
+
+    tempBookOne = tempBookOne.filter(
+      song => thirdPiece.bookOrder !== song.bookOrder
+    );
+
+    let selectedPieces2 = [firstPiece, secondPiece, thirdPiece].filter(
+      piece => piece !== nullSong
+    );
+    selectedPieces2 = selectedPieces2.sort(compare);
+
+    setSelectedPieces(selectedPieces2);
     setReset(false);
-    setSelectedPieces(["buttonCLicked"]);
+    setCurrentBookOne(tempBookOne);
   };
 
   const resetSongPool = () => {
     setSelectedPieces([]);
-    // setCurrentBookOne(bookOne);
+    setCurrentBookOne(bookOne);
     setReset(true);
   };
 
