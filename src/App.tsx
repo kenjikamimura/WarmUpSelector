@@ -1,22 +1,22 @@
 import * as React from "react";
 import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
-// import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-// import Container from "@material-ui/core/Container";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid
+} from "@material-ui/core";
 
 import ISong from "./shared/interfaces/ISong";
 import { compareSongs } from "./shared/helpers/helpers";
 
 import SelectedPieces from "./SelectedPieces";
-import bookOne from "./constants/bookOne";
 
+import bookOne from "./constants/bookOne";
 import lang from "./constants/en";
-import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   card: {
