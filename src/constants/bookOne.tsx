@@ -70,4 +70,17 @@ const bookOne = [
   }
 ];
 
+export let bookOneAutoSelect = [] as any;
+bookOne.forEach((piece, index) => {
+  bookOneAutoSelect[index] = { value: piece, label: piece.name };
+});
+
+console.log(bookOneAutoSelect);
+
+// const options = [
+//   { value: "chocolate", label: "Chocolate" },
+//   { value: "strawberry", label: "Strawberry" },
+//   { value: "vanilla", label: "Vanilla" }
+// ];
+
 export default bookOne;

@@ -9,13 +9,14 @@ import {
   CardContent,
   Grid
 } from "@material-ui/core";
+import Select from "react-select";
 
 import ISong from "./shared/interfaces/ISong";
 import { compareSongs } from "./shared/helpers/helpers";
 
 import SelectedPieces from "./SelectedPieces";
 
-import bookOne from "./constants/bookOne";
+import bookOne, { bookOneAutoSelect } from "./constants/bookOne";
 import lang from "./constants/en";
 
 const useStyles = makeStyles(theme => ({
@@ -36,6 +37,10 @@ function App() {
 
   const [selectedPieces, setSelectedPieces] = React.useState([] as any);
   const [currentBookOne, setCurrentBookOne] = React.useState(bookOne);
+  const [
+    selectedPieceFromAutoSelector,
+    setSelectedPieceFromAutoSelector
+  ] = React.useState();
   const [reset, setReset] = React.useState(true);
 
   const generateRandomPieces = () => {
@@ -78,8 +83,29 @@ function App() {
 
   const resetSongPool = () => {
     setSelectedPieces([]);
-    setCurrentBookOne(bookOne);
+    setStudentsCurrentPlayablePieces();
     setReset(true);
+  };
+
+  const handleAutoSelectChange = (selectedOption: any) => {
+    setSelectedPieceFromAutoSelector(selectedOption);
+  };
+
+  React.useEffect(() => {
+    setStudentsCurrentPlayablePieces();
+  }, [selectedPieceFromAutoSelector]);
+
+  const setStudentsCurrentPlayablePieces = () => {
+    if (selectedPieceFromAutoSelector == null) {
+      return;
+    }
+    const studentsPlayablePieces = [] as any;
+    bookOne.forEach((piece, index) => {
+      if (piece.bookOrder <= selectedPieceFromAutoSelector.value.bookOrder) {
+        studentsPlayablePieces[index] = piece;
+      }
+    });
+    setCurrentBookOne(studentsPlayablePieces);
   };
 
   return (
@@ -88,7 +114,23 @@ function App() {
         <Typography variant="h3" component="h2" align="center" color="primary">
           {lang.APP_NAME}
         </Typography>
-        <SelectedPieces selectedPieces={selectedPieces} reset={reset} />
+
+        <Grid container={true} spacing={3}>
+          <Grid item={true} xs={12}>
+            <SelectedPieces selectedPieces={selectedPieces} reset={reset} />
+          </Grid>
+          <Grid item={true} xs={12}>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              isClearable={true}
+              isSearchable={true}
+              placeholder={lang.CURRENT_PIECE}
+              options={bookOneAutoSelect}
+              onChange={handleAutoSelectChange}
+            />
+          </Grid>
+        </Grid>
       </CardContent>
       <CardActions>
         <Grid container={true} direction="column" alignItems="center">

@@ -3,7 +3,8 @@ const lang = {
   RANDOMIZE: "Randomize!",
   RESET_BUTTON: "Reset",
   CLICK_RANDOMIZE: "Click Randomize!",
-  CLICK_RESET: "Click Reset!"
+  CLICK_RESET: "Click Reset!",
+  CURRENT_PIECE: "Current Piece"
 };
 
 export default lang;
