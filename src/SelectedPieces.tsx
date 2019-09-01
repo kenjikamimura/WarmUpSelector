@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-// Todo: Extract this to another file and import it
 interface IProps {
   selectedPieces: ISong[];
   reset: boolean;
@@ -50,7 +49,7 @@ export default function SelectedPieces({ selectedPieces, reset }: IProps) {
           {reset
             ? null
             : selectedPieces.map(piece => (
-                <TableRow key={piece.name}>
+                <TableRow key={piece.playingOrder + "." + piece.name}>
                   <TableCell component="th" scope="row" align="center">
                     {piece.bookOrder + ". " + piece.name}
                   </TableCell>

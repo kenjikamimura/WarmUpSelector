@@ -133,6 +133,12 @@ function App() {
               color="primary"
               className={classes.button}
               onClick={generateRandomPieces}
+              disabled={
+                selectedPieceFromAutoSelector === null ||
+                selectedPieceFromAutoSelector === undefined
+                  ? true
+                  : false
+              }
             >
               {lang.RANDOMIZE}
             </Button>
