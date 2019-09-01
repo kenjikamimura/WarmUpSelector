@@ -47,6 +47,7 @@ function App() {
     const tempBookOne = currentBookOne;
     const nullSong: ISong = {
       bookOrder: 0,
+      playingOrder: 0,
       name: ""
     };
     const newSelectedPieces: ISong[] = [];
@@ -89,7 +90,9 @@ function App() {
     }
     const studentsPlayablePieces = [] as any;
     bookOne.forEach((piece, index) => {
-      if (piece.bookOrder <= selectedPieceFromAutoSelector.value.bookOrder) {
+      if (
+        piece.playingOrder <= selectedPieceFromAutoSelector.value.playingOrder
+      ) {
         studentsPlayablePieces[index] = piece;
       }
     });
