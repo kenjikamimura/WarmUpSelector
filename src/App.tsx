@@ -44,39 +44,27 @@ function App() {
   const [reset, setReset] = React.useState(true);
 
   const generateRandomPieces = () => {
-    let tempBookOne = currentBookOne;
-
+    const tempBookOne = currentBookOne;
     const nullSong: ISong = {
       bookOrder: 0,
       name: ""
     };
-    // Todo refactor this to be cleaner, extract out to helper file
-    const firstPiece = tempBookOne.length
-      ? tempBookOne[Math.floor(Math.random() * tempBookOne.length)]
-      : nullSong;
-    tempBookOne = tempBookOne.filter(
-      song => firstPiece.bookOrder !== song.bookOrder
-    );
+    const newSelectedPieces: ISong[] = [];
+    const numberOfPiecesToSelect = 3;
 
-    const secondPiece = tempBookOne.length
-      ? tempBookOne[Math.floor(Math.random() * tempBookOne.length)]
-      : nullSong;
-    tempBookOne = tempBookOne.filter(
-      song => secondPiece.bookOrder !== song.bookOrder
-    );
-    const thirdPiece = tempBookOne.length
-      ? tempBookOne[Math.floor(Math.random() * tempBookOne.length)]
-      : nullSong;
+    for (let i = 0; i < numberOfPiecesToSelect; i++) {
+      const randomIndex = Math.floor(Math.random() * tempBookOne.length);
+      newSelectedPieces[i] = tempBookOne.length
+        ? tempBookOne[randomIndex]
+        : nullSong;
+      tempBookOne.splice(randomIndex, 1);
+    }
 
-    tempBookOne = tempBookOne.filter(
-      song => thirdPiece.bookOrder !== song.bookOrder
-    );
-
-    const newSelectedPieces = [firstPiece, secondPiece, thirdPiece]
+    const newSelectedPiecesFilteredAndSorted = newSelectedPieces
       .filter(piece => piece !== nullSong)
       .sort(compareSongs);
 
-    setSelectedPieces(newSelectedPieces);
+    setSelectedPieces(newSelectedPiecesFilteredAndSorted);
     setReset(false);
     setCurrentBookOne(tempBookOne);
   };
