@@ -46,6 +46,7 @@ function App() {
   const generateRandomPieces = () => {
     const tempsongPool = currentsongPool;
     const nullSong: ISong = {
+      booknumber: 0,
       bookOrder: 0,
       playingOrder: 0,
       name: ""
