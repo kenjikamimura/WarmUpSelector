@@ -52,7 +52,7 @@ export default function SelectedPieces({ selectedPieces, reset }: IProps) {
             : selectedPieces.map(piece => (
                 <TableRow key={piece.name}>
                   <TableCell component="th" scope="row" align="center">
-                    {piece.name}
+                    {piece.bookOrder + ". " + piece.name}
                   </TableCell>
                 </TableRow>
               ))}
