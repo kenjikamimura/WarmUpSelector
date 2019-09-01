@@ -1,5 +1,5 @@
 import ISong from "../shared/interfaces/ISong";
-const bookOne: ISong[] = [
+const songPool: ISong[] = [
   {
     bookOrder: 1,
     playingOrder: 1,
@@ -88,12 +88,12 @@ const bookOne: ISong[] = [
   }
 ];
 
-export let bookOneAutoSelect = [] as any;
-bookOne.forEach((piece, index) => {
-  bookOneAutoSelect[index] = {
+export let songPoolAutoSelect = [] as any;
+songPool.forEach((piece, index) => {
+  songPoolAutoSelect[index] = {
     value: piece,
     label: piece.bookOrder + ". " + piece.name
   };
 });
 
-export default bookOne;
+export default songPool;

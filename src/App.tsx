@@ -16,7 +16,7 @@ import { compareSongs } from "./shared/helpers/helpers";
 
 import SelectedPieces from "./SelectedPieces";
 
-import bookOne, { bookOneAutoSelect } from "./constants/bookOne";
+import songPool, { songPoolAutoSelect } from "./constants/songPool";
 import lang from "./constants/en";
 
 const useStyles = makeStyles(theme => ({
@@ -36,7 +36,7 @@ function App() {
   const classes = useStyles();
 
   const [selectedPieces, setSelectedPieces] = React.useState([] as any);
-  const [currentBookOne, setCurrentBookOne] = React.useState(bookOne);
+  const [currentsongPool, setCurrentsongPool] = React.useState(songPool);
   const [
     selectedPieceFromAutoSelector,
     setSelectedPieceFromAutoSelector
@@ -44,7 +44,7 @@ function App() {
   const [reset, setReset] = React.useState(true);
 
   const generateRandomPieces = () => {
-    const tempBookOne = currentBookOne;
+    const tempsongPool = currentsongPool;
     const nullSong: ISong = {
       bookOrder: 0,
       playingOrder: 0,
@@ -54,11 +54,11 @@ function App() {
     const numberOfPiecesToSelect = 3;
 
     for (let i = 0; i < numberOfPiecesToSelect; i++) {
-      const randomIndex = Math.floor(Math.random() * tempBookOne.length);
-      newSelectedPieces[i] = tempBookOne.length
-        ? tempBookOne[randomIndex]
+      const randomIndex = Math.floor(Math.random() * tempsongPool.length);
+      newSelectedPieces[i] = tempsongPool.length
+        ? tempsongPool[randomIndex]
         : nullSong;
-      tempBookOne.splice(randomIndex, 1);
+      tempsongPool.splice(randomIndex, 1);
     }
 
     const newSelectedPiecesFilteredAndSorted = newSelectedPieces
@@ -67,7 +67,7 @@ function App() {
 
     setSelectedPieces(newSelectedPiecesFilteredAndSorted);
     setReset(false);
-    setCurrentBookOne(tempBookOne);
+    setCurrentsongPool(tempsongPool);
   };
 
   const resetSongPool = () => {
@@ -89,14 +89,14 @@ function App() {
       return;
     }
     const studentsPlayablePieces = [] as any;
-    bookOne.forEach((piece, index) => {
+    songPool.forEach((piece, index) => {
       if (
         piece.playingOrder <= selectedPieceFromAutoSelector.value.playingOrder
       ) {
         studentsPlayablePieces[index] = piece;
       }
     });
-    setCurrentBookOne(studentsPlayablePieces);
+    setCurrentsongPool(studentsPlayablePieces);
   };
 
   return (
@@ -117,7 +117,7 @@ function App() {
               isClearable={true}
               isSearchable={true}
               placeholder={lang.CURRENT_PIECE}
-              options={bookOneAutoSelect}
+              options={songPoolAutoSelect}
               onChange={handleAutoSelectChange}
             />
           </Grid>
