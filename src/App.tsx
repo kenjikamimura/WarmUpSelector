@@ -49,7 +49,8 @@ function App() {
       booknumber: 0,
       bookOrder: 0,
       playingOrder: 0,
-      name: ""
+      name: "",
+      composer: null
     };
     const newSelectedPieces: ISong[] = [];
     const numberOfPiecesToSelect = 3;
