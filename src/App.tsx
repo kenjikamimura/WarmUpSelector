@@ -7,7 +7,7 @@ import {
   Card,
   CardActions,
   CardContent,
-  Grid
+  Grid,
 } from "@material-ui/core";
 import Select from "react-select";
 
@@ -19,17 +19,17 @@ import SelectedPieces from "./SelectedPieces";
 import songPool, { songPoolAutoSelect } from "./constants/songPool";
 import lang from "./constants/en";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     minWidth: 275,
-    minHeight: 1000
+    minHeight: 1000,
   },
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   title: {
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 }));
 
 function App() {
@@ -39,8 +39,8 @@ function App() {
   const [currentsongPool, setCurrentsongPool] = React.useState(songPool);
   const [
     selectedPieceFromAutoSelector,
-    setSelectedPieceFromAutoSelector
-  ] = React.useState();
+    setSelectedPieceFromAutoSelector,
+  ] = React.useState({ value: { playingOrder: 0 } });
   const [reset, setReset] = React.useState(true);
 
   const generateRandomPieces = () => {
@@ -50,7 +50,7 @@ function App() {
       bookOrder: 0,
       playingOrder: 0,
       name: "",
-      composer: null
+      composer: null,
     };
     const newSelectedPieces: ISong[] = [];
     const numberOfPiecesToSelect = 3;
@@ -64,7 +64,7 @@ function App() {
     }
 
     const newSelectedPiecesFilteredAndSorted = newSelectedPieces
-      .filter(piece => piece !== nullSong)
+      .filter((piece) => piece !== nullSong)
       .sort(compareSongs);
 
     setSelectedPieces(newSelectedPiecesFilteredAndSorted);
