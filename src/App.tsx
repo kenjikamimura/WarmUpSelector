@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -16,7 +16,10 @@ import { compareSongs } from "./shared/helpers/helpers";
 
 import SelectedPieces from "./SelectedPieces";
 
-import songPool, { songPoolAutoSelect } from "./constants/songPool";
+import songPool, {
+  songPoolAutoSelect,
+  ISongPoolAutoSelect,
+} from "./constants/songPool";
 import lang from "./constants/en";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,12 +38,12 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
 
-  const [selectedPieces, setSelectedPieces] = React.useState([] as any);
-  const [currentsongPool, setCurrentsongPool] = React.useState(songPool);
+  const [selectedPieces, setSelectedPieces] = useState([] as ISong[]);
+  const [currentsongPool, setCurrentsongPool] = useState(songPool);
   const [
     selectedPieceFromAutoSelector,
     setSelectedPieceFromAutoSelector,
-  ] = React.useState({ value: { playingOrder: 0 } });
+  ] = useState({} as ISongPoolAutoSelect);
   const [reset, setReset] = React.useState(true);
 
   const generateRandomPieces = () => {
@@ -78,11 +81,7 @@ function App() {
     setReset(true);
   };
 
-  const handleAutoSelectChange = (selectedOption: any) => {
-    setSelectedPieceFromAutoSelector(selectedOption);
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     setStudentsCurrentPlayablePieces();
   }, [selectedPieceFromAutoSelector]);
 
@@ -93,7 +92,7 @@ function App() {
     const studentsPlayablePieces = [] as any;
     songPool.forEach((piece, index) => {
       if (
-        piece.playingOrder <= selectedPieceFromAutoSelector.value.playingOrder
+        piece.playingOrder <= selectedPieceFromAutoSelector?.value?.playingOrder
       ) {
         studentsPlayablePieces[index] = piece;
       }
@@ -120,7 +119,11 @@ function App() {
               isSearchable={true}
               placeholder={lang.CURRENT_PIECE}
               options={songPoolAutoSelect}
-              onChange={handleAutoSelectChange}
+              onChange={(selectedOption) => {
+                setSelectedPieceFromAutoSelector(
+                  selectedOption as ISongPoolAutoSelect
+                );
+              }}
             />
           </Grid>
         </Grid>
