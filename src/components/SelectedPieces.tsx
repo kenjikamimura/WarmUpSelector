@@ -8,7 +8,7 @@ import {
   Paper,
 } from "@material-ui/core";
 
-import ISong from "./shared/interfaces/ISong";
+import ISong from "../shared/interfaces/ISong";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,36 +31,36 @@ export default function SelectedPieces({ selectedPieces, reset }: IProps) {
   console.log(selectedPieces);
   const classes = useStyles();
 
+  const emptyTableRow = (
+    <TableRow>
+      <TableCell component="th" scope="row" align="center">
+        {"---"}
+      </TableCell>
+    </TableRow>
+  );
+
   return (
     <Paper className={classes.root}>
       <Table>
         <TableBody>
           {reset || !selectedPieces.length ? (
             <>
-              <TableRow>
-                <TableCell component="th" scope="row" align="center">
-                  {"---"}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row" align="center">
-                  {"---"}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row" align="center">
-                  {"---"}
-                </TableCell>
-              </TableRow>
+              {emptyTableRow}
+              {emptyTableRow}
+              {emptyTableRow}
             </>
           ) : (
-            selectedPieces.map((piece) => (
-              <TableRow key={piece.playingOrder + "." + piece.name}>
-                <TableCell component="th" scope="row" align="center">
-                  {piece.bookOrder + ". " + piece.name}
-                </TableCell>
-              </TableRow>
-            ))
+            selectedPieces.map((piece) => {
+              return piece ? (
+                <TableRow key={piece.playingOrder + "." + piece.name}>
+                  <TableCell component="th" scope="row" align="center">
+                    {piece.bookOrder + ". " + piece.name}
+                  </TableCell>
+                </TableRow>
+              ) : (
+                emptyTableRow
+              );
+            })
           )}
         </TableBody>
       </Table>

@@ -13,7 +13,7 @@ import { AppBar } from "./components/AppBar";
 import ISong from "./shared/interfaces/ISong";
 import { compareSongs } from "./shared/helpers/helpers";
 
-import SelectedPieces from "./SelectedPieces";
+import SelectedPieces from "./components/SelectedPieces";
 
 import songPool, {
   songPoolAutoSelect,
@@ -60,7 +60,7 @@ function App() {
     for (let i = 0; i < numberOfPiecesToSelect; i++) {
       const randomIndex = Math.floor(Math.random() * tempsongPool.length);
 
-      if (tempsongPool[randomIndex] !== undefined) {
+      if (true) {
         newSelectedPieces.push(tempsongPool[randomIndex]);
       }
 
