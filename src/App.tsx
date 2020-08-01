@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -83,11 +83,7 @@ function App() {
     setReset(true);
   };
 
-  useEffect(() => {
-    setStudentsCurrentPlayablePieces();
-  }, [selectedPieceFromAutoSelector]);
-
-  const setStudentsCurrentPlayablePieces = () => {
+  const setStudentsCurrentPlayablePieces = useCallback(() => {
     if (selectedPieceFromAutoSelector == null) {
       console.log("hi");
       return;
@@ -99,7 +95,11 @@ function App() {
     ) as ISong[];
 
     setCurrentsongPool(studentsPlayablePieces);
-  };
+  }, [selectedPieceFromAutoSelector]);
+
+  useEffect(() => {
+    setStudentsCurrentPlayablePieces();
+  }, [selectedPieceFromAutoSelector, setStudentsCurrentPlayablePieces]);
 
   return (
     <Card className={classes.card}>
