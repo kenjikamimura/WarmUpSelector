@@ -43,7 +43,7 @@ function App() {
   const [
     selectedPieceFromAutoSelector,
     setSelectedPieceFromAutoSelector,
-  ] = useState({} as ISongPoolAutoSelect);
+  ] = useState(undefined as ISongPoolAutoSelect | undefined);
   const [reset, setReset] = React.useState(true);
 
   const generateRandomPieces = () => {
@@ -60,9 +60,11 @@ function App() {
 
     for (let i = 0; i < numberOfPiecesToSelect; i++) {
       const randomIndex = Math.floor(Math.random() * tempsongPool.length);
-      newSelectedPieces[i] = tempsongPool.length
-        ? tempsongPool[randomIndex]
-        : nullSong;
+
+      if (tempsongPool[randomIndex] !== undefined) {
+        newSelectedPieces.push(tempsongPool[randomIndex]);
+      }
+
       tempsongPool.splice(randomIndex, 1);
     }
 
@@ -87,16 +89,15 @@ function App() {
 
   const setStudentsCurrentPlayablePieces = () => {
     if (selectedPieceFromAutoSelector == null) {
+      console.log("hi");
       return;
     }
-    const studentsPlayablePieces = [] as any;
-    songPool.forEach((piece, index) => {
-      if (
+
+    const studentsPlayablePieces = songPool.filter(
+      (piece) =>
         piece.playingOrder <= selectedPieceFromAutoSelector?.value?.playingOrder
-      ) {
-        studentsPlayablePieces[index] = piece;
-      }
-    });
+    ) as ISong[];
+
     setCurrentsongPool(studentsPlayablePieces);
   };
 
@@ -136,12 +137,7 @@ function App() {
               color="primary"
               className={classes.button}
               onClick={generateRandomPieces}
-              disabled={
-                selectedPieceFromAutoSelector === null ||
-                selectedPieceFromAutoSelector === undefined
-                  ? true
-                  : false
-              }
+              disabled={!selectedPieceFromAutoSelector}
             >
               {lang.RANDOMIZE}
             </Button>
