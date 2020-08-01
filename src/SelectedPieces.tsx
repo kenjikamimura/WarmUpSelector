@@ -4,13 +4,11 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   Paper,
 } from "@material-ui/core";
 
 import ISong from "./shared/interfaces/ISong";
-import lang from "./constants/en";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,9 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       marginTop: theme.spacing(3),
       overflowX: "auto",
-    },
-    table: {
-      minWidth: 300,
+      display: "flex",
+      justifyContent: "center",
     },
   })
 );
@@ -31,32 +28,40 @@ interface IProps {
 }
 
 export default function SelectedPieces({ selectedPieces, reset }: IProps) {
+  console.log(selectedPieces);
   const classes = useStyles();
 
   return (
     <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          {reset ? (
-            <TableRow>
-              <TableCell align="center">{lang.CLICK_RANDOMIZE}</TableCell>
-            </TableRow>
-          ) : selectedPieces.length === 0 ? (
-            <TableRow>
-              <TableCell align="center">{lang.CLICK_RESET}</TableCell>
-            </TableRow>
-          ) : null}
-        </TableHead>
+      <Table>
         <TableBody>
-          {reset
-            ? null
-            : selectedPieces.map((piece) => (
-                <TableRow key={piece.playingOrder + "." + piece.name}>
-                  <TableCell component="th" scope="row" align="center">
-                    {piece.bookOrder + ". " + piece.name}
-                  </TableCell>
-                </TableRow>
-              ))}
+          {reset || !selectedPieces.length ? (
+            <>
+              <TableRow>
+                <TableCell component="th" scope="row" align="center">
+                  {"---"}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row" align="center">
+                  {"---"}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row" align="center">
+                  {"---"}
+                </TableCell>
+              </TableRow>
+            </>
+          ) : (
+            selectedPieces.map((piece) => (
+              <TableRow key={piece.playingOrder + "." + piece.name}>
+                <TableCell component="th" scope="row" align="center">
+                  {piece.bookOrder + ". " + piece.name}
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </Paper>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import {
   Button,
   Card,
@@ -10,7 +9,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import Select from "react-select";
-
+import { AppBar } from "./components/AppBar";
 import ISong from "./shared/interfaces/ISong";
 import { compareSongs } from "./shared/helpers/helpers";
 
@@ -85,7 +84,6 @@ function App() {
 
   const setStudentsCurrentPlayablePieces = useCallback(() => {
     if (selectedPieceFromAutoSelector == null) {
-      console.log("hi");
       return;
     }
 
@@ -102,58 +100,56 @@ function App() {
   }, [selectedPieceFromAutoSelector, setStudentsCurrentPlayablePieces]);
 
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography variant="h3" component="h2" align="center" color="primary">
-          {lang.APP_NAME}
-        </Typography>
-
-        <Grid container={true} spacing={3}>
-          <Grid item={true} xs={12}>
-            <SelectedPieces selectedPieces={selectedPieces} reset={reset} />
+    <AppBar>
+      <Card className={classes.card}>
+        <CardContent>
+          <Grid container={true} spacing={3} justify="center">
+            <Grid item={true} xs={10}>
+              <SelectedPieces selectedPieces={selectedPieces} reset={reset} />
+            </Grid>
+            <Grid item={true} xs={10}>
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                isClearable={true}
+                isSearchable={true}
+                placeholder={lang.CURRENT_PIECE}
+                options={songPoolAutoSelect}
+                onChange={(selectedOption) => {
+                  setSelectedPieceFromAutoSelector(
+                    selectedOption as ISongPoolAutoSelect
+                  );
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item={true} xs={12}>
-            <Select
-              className="basic-single"
-              classNamePrefix="select"
-              isClearable={true}
-              isSearchable={true}
-              placeholder={lang.CURRENT_PIECE}
-              options={songPoolAutoSelect}
-              onChange={(selectedOption) => {
-                setSelectedPieceFromAutoSelector(
-                  selectedOption as ISongPoolAutoSelect
-                );
-              }}
-            />
+        </CardContent>
+        <CardActions>
+          <Grid container={true} direction="column" alignItems="center">
+            <Grid item={true}>
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.button}
+                onClick={generateRandomPieces}
+                disabled={!selectedPieceFromAutoSelector}
+              >
+                {lang.RANDOMIZE}
+              </Button>
+            </Grid>
+            <Grid item={true}>
+              <Button
+                variant="outlined"
+                className={classes.button}
+                onClick={resetSongPool}
+              >
+                {lang.RESET_BUTTON}
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
-      <CardActions>
-        <Grid container={true} direction="column" alignItems="center">
-          <Grid item={true}>
-            <Button
-              variant="outlined"
-              color="primary"
-              className={classes.button}
-              onClick={generateRandomPieces}
-              disabled={!selectedPieceFromAutoSelector}
-            >
-              {lang.RANDOMIZE}
-            </Button>
-          </Grid>
-          <Grid item={true}>
-            <Button
-              variant="outlined"
-              className={classes.button}
-              onClick={resetSongPool}
-            >
-              {lang.RESET_BUTTON}
-            </Button>
-          </Grid>
-        </Grid>
-      </CardActions>
-    </Card>
+        </CardActions>
+      </Card>
+    </AppBar>
   );
 }
 
